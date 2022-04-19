@@ -4,6 +4,9 @@ import org.springframework.stereotype.Service;
 import ru.pavelyurtaev.jobbot.model.Job;
 import ru.pavelyurtaev.jobbot.service.job.arbeitnow.model.ArbeitnowJob;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 @Service
 public class JobMapperImpl implements JobMapper {
     @Override
@@ -15,6 +18,8 @@ public class JobMapperImpl implements JobMapper {
                 .remote(job.remote())
                 .location(job.location())
                 .salary(null)
+                .timestamp(LocalDateTime.ofInstant(job.createdAt(), ZoneId.systemDefault()))
+                .url(job.url())
                 .build();
     }
 }

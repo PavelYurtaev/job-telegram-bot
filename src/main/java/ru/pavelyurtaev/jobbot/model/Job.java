@@ -3,6 +3,8 @@ package ru.pavelyurtaev.jobbot.model;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 public class Job {
@@ -12,4 +14,6 @@ public class Job {
     private boolean remote;
     private String location;
     private String salary;
+    private LocalDateTime timestamp;
+    private String url;
 }

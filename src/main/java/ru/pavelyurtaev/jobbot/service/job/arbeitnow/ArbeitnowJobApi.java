@@ -1,8 +1,10 @@
 package ru.pavelyurtaev.jobbot.service.job.arbeitnow;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import ru.pavelyurtaev.jobbot.model.Job;
 import ru.pavelyurtaev.jobbot.service.job.JobApi;
@@ -21,9 +23,16 @@ public class ArbeitnowJobApi implements JobApi {
     private final RestTemplate restTemplate;
     private final JobMapper jobMapper;
 
+    @SneakyThrows
     @Override
     public List<Job> getJobs(final String queryString) {
-        final ArbeitnowResponse response = restTemplate.getForObject(apiUrl, ArbeitnowResponse.class);
+        ArbeitnowResponse response = null;
+        try {
+            response = restTemplate.getForObject(apiUrl, ArbeitnowResponse.class);
+        } catch (RestClientException e) {
+            log.error("Exception on Arbeitnow api call", e);
+        }
+
         if (response == null) {
             log.info("Arbeitnow returned null response");
             return List.of();
