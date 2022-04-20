@@ -13,3 +13,6 @@ spring:
     password: ${JDBC_DATABASE_PASSWORD:1pyurtaev_Job_Bot!}
 bot:
   token: ${BOT_TOKEN}
+
+heroku:
+  app: ${APP_URL:}
